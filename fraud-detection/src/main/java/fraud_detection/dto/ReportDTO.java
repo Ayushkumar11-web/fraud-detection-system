@@ -1,4 +1,4 @@
 package fraud_detection.dto;
 
-public class DashboardDTO {
+public class ReportDTO {
 }
