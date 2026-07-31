@@ -23,20 +23,32 @@ public class DashboardService {
     @Autowired
     private FraudAlertRepository fraudAlertRepository;
 
-    public DashboardDTO getDashboardData() {
+    public DashboardDTO getDashboard() {
 
-        long totalCustomers = customerRepository.count();
-        long totalAccounts = accountRepository.count();
-        long totalTransactions = transactionRepository.count();
-        long totalFraudAlerts = fraudAlertRepository.count();
+        DashboardDTO dashboard = new DashboardDTO();
 
-        DashboardDTO dashboardDTO = new DashboardDTO();
+        dashboard.setTotalCustomers(customerRepository.count());
 
-        dashboardDTO.setTotalCustomers(totalCustomers);
-        dashboardDTO.setTotalAccounts(totalAccounts);
-        dashboardDTO.setTotalTransactions(totalTransactions);
-        dashboardDTO.setTotalFraudAlerts(totalFraudAlerts);
+        dashboard.setTotalAccounts(accountRepository.count());
 
-        return dashboardDTO;
+        dashboard.setTotalTransactions(transactionRepository.count());
+
+        dashboard.setSuccessfulTransactions(
+                transactionRepository.countByStatus("SUCCESS")
+        );
+
+        dashboard.setFailedTransactions(
+                transactionRepository.countByStatus("FAILED")
+        );
+
+        dashboard.setSuspiciousTransactions(
+                transactionRepository.countByStatus("SUSPICIOUS")
+        );
+
+        dashboard.setTotalFraudAlerts(
+                fraudAlertRepository.count()
+        );
+
+        return dashboard;
     }
 }

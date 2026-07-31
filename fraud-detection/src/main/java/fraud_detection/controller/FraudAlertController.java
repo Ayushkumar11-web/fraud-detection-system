@@ -14,11 +14,6 @@ public class FraudAlertController {
     @Autowired
     private FraudAlertService fraudAlertService;
 
-    @PostMapping
-    public FraudAlert saveAlert(@RequestBody FraudAlert alert) {
-        return fraudAlertService.saveAlert(alert);
-    }
-
     @GetMapping
     public List<FraudAlert> getAllAlerts() {
         return fraudAlertService.getAllAlerts();
@@ -32,6 +27,6 @@ public class FraudAlertController {
     @DeleteMapping("/{id}")
     public String deleteAlert(@PathVariable Long id) {
         fraudAlertService.deleteAlert(id);
-        return "Alert deleted successfully";
+        return "Fraud Alert deleted successfully";
     }
 }

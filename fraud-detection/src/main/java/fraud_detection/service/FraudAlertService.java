@@ -13,18 +13,17 @@ public class FraudAlertService {
     @Autowired
     private FraudAlertRepository fraudAlertRepository;
 
-    public FraudAlert saveAlert(FraudAlert alert) {
-        return fraudAlertRepository.save(alert);
-    }
-
+    // Get all fraud alerts
     public List<FraudAlert> getAllAlerts() {
         return fraudAlertRepository.findAll();
     }
 
+    // Get fraud alert by ID
     public FraudAlert getAlertById(Long id) {
         return fraudAlertRepository.findById(id).orElse(null);
     }
 
+    // Delete fraud alert
     public void deleteAlert(Long id) {
         fraudAlertRepository.deleteById(id);
     }

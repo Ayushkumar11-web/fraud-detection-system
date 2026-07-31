@@ -2,6 +2,7 @@ package fraud_detection.controller;
 
 import fraud_detection.entity.Customer;
 import fraud_detection.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,8 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping
-    public Customer saveCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
+    public Customer addCustomer(@Valid @RequestBody Customer customer) {
+        return customerService.addCustomer(customer);
     }
 
     @GetMapping
@@ -25,13 +26,27 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable Long id) {
+    public Customer getCustomer(@PathVariable Long id) {
         return customerService.getCustomerById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Customer updateCustomer(@PathVariable Long id,
+                                   @Valid @RequestBody Customer customer) {
+        return customerService.updateCustomer(id, customer);
     }
 
     @DeleteMapping("/{id}")
     public String deleteCustomer(@PathVariable Long id) {
-        customerService.deleteCustomer(id);
-        return "Customer deleted successfully";
+        return customerService.deleteCustomer(id);
     }
+
+    // SEARCH API
+    @GetMapping("/search")
+    public List<Customer> searchCustomers(@RequestParam String keyword) {
+
+        return customerService.searchCustomers(keyword);
+
+    }
+
 }
